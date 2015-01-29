@@ -30,7 +30,7 @@ enum mcu_gpios {
 /**
  * Конфигурирование всех GPIO
  */
-static struct gpio gpio_list[] = {
+struct gpio gpio_list[] = {
         { // MCU_GPIO_LED_COLD
             .direction_addr = (u8 *) &DDRB,
             .port_addr = (u8 *) &PORTB,
@@ -104,9 +104,9 @@ flow_contols_init()
     EICRA |= _BV(ISC11);
     EIMSK |= _BV(INT0);
 
-    EICRA |= _BV(ISC01); \
-    EICRA |= _BV(ISC11); \
-    EIMSK |= _BV(INT1); \
+    EICRA |= _BV(ISC01);
+    EICRA |= _BV(ISC11);
+    EIMSK |= _BV(INT1);
 }
 
 
