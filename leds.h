@@ -1,12 +1,11 @@
 #ifndef LED_LIB_H
 #define LED_LIB_H
 
+#include "gpio.h"
 #include "types.h"
 
 struct led {
-    u8 *port_dir;
-    u8 *port;
-    u8 pin; // Номер пина на котором установлен светодиод
+    struct gpio gpio;
     u8 state :1; // Текущее состояние светодиода
     t_counter blink_timer; // Таймер для мигания
     t_counter interval1; // Установленный интервал мигания, 0 - немигать

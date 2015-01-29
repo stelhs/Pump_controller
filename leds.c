@@ -1,5 +1,6 @@
 #include "types.h"
 #include "leds.h"
+#include "gpio.h"
 
 static struct // Структура для работы со светодиодами
 {
@@ -10,12 +11,7 @@ static struct // Структура для работы со светодиод�
 static void
 turn_led(struct led *led, u8 mode) // Включить или выключить светодиод
 {
-    if (mode) // Если светодиод нужно зажечь
-        led->port[0] |= (1 << led->pin);
-    else
-        // или потушить
-        led->port[0] &= ~(1 << led->pin);
-
+    gpio_set_state(led->gpio, mode);
     led->state = mode;
 }
 
@@ -32,8 +28,7 @@ leds_update(void)
         if (led->blink_timer > 1 || led->interval1 == 0)
             continue;
 
-        if (led->state) // Изменяем состояние светодиода
-        {
+        if (led->state) {
             turn_led(led, 0);
             led->blink_timer = led->interval2; // Заряжаем таймер значением interval1
         }
@@ -53,7 +48,7 @@ leds_init(struct led *leds, u8 count)
     for (i = 0; i < count; i++) {
         struct led *led = Lib_leds.leds + i;
 
-        led->port_dir[0] |= (1 << led->pin); // Устанавливаем все порты на выход
+        gpio_set_direction(led->gpio, 0);
         led->blink_timer = 0;
         led->interval1 = 0;
         led->interval2 = 0;
