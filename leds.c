@@ -5,11 +5,10 @@
 static struct // Структура для работы со светодиодами
 {
     struct led *leds; // Указатель на массив светодиодов
-    u8 count; // Количество светодиодов в массиве
 } Lib_leds;
 
 static void
-turn_led(struct led *led, u8 mode) // Включить или выключить светодиод
+led_set_state(struct led *led, u8 mode) // Включить или выключить светодиод
 {
     gpio_set_state(led->gpio, mode);
     led->state = mode;
@@ -18,10 +17,8 @@ turn_led(struct led *led, u8 mode) // Включить или выключить
 void
 leds_update(void)
 {
-    u8 i;
-    for (i = 0; i < Lib_leds.count; i++) {
-        struct led *led = Lib_leds.leds + i;
-
+    struct led *led;
+    for (led = leds; led->gpio != NULL; led++) {
         if (led->blink_timer > 1)
             led->blink_timer--;
 
@@ -40,15 +37,12 @@ leds_update(void)
 }
 
 void
-leds_init(struct led *leds, u8 count)
+leds_init(struct led *leds)
 {
-    u8 i;
     Lib_leds.leds = leds;
-    Lib_leds.count = count;
-    for (i = 0; i < count; i++) {
-        struct led *led = Lib_leds.leds + i;
-
-        gpio_set_direction(led->gpio, 0);
+    struct led *led;
+    for (led = leds; led->gpio != NULL; led++) {
+        gpio_set_direction(led->gpio, GPIO_OUTPUT);
         led->blink_timer = 0;
         led->interval1 = 0;
         led->interval2 = 0;
@@ -64,7 +58,7 @@ leds_set_state(u8 num, u8 mode, t_counter interval1, t_counter interval2) // У�
     if (interval2 == 0)
         interval2 = interval1;
 
-    turn_led(led, mode);
+    led_set_state(led, mode);
     led->interval1 = interval1;
     led->interval2 = interval2;
     led->blink_timer = interval1;

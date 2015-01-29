@@ -5,7 +5,7 @@
 #include "types.h"
 
 struct led {
-    struct gpio gpio;
+    struct gpio *gpio;
     u8 state :1; // Текущее состояние светодиода
     t_counter blink_timer; // Таймер для мигания
     t_counter interval1; // Установленный интервал мигания, 0 - немигать
@@ -15,7 +15,7 @@ struct led {
 void
 leds_update(void);
 void
-leds_init(struct led *leds, u8 count);
+leds_init(struct led *leds);
 
 // Установить состояние светодиода
 // interval1 и interval2 это время горения и время негорения светодиода

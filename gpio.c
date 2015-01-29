@@ -12,28 +12,42 @@ static struct
  * @param gpio - GPIO порт
  * @param mode - 0-вход, 1-выход
  */
-static void
-gpio_set_direction(struct gpio *gpio, u8 mode)
+void
+gpio_set_direction(struct gpio *gpio, enum gpio_direction dir)
 {
-    if (mode)
-        gpio->direction[0] |= (1 << gpio->pin);
+    if (dir)
+        gpio->direction_addr[0] |= (1 << gpio->pin);
     else
-        gpio->direction[0] &= ~(1 << gpio->pin);
+        gpio->direction_addr[0] &= ~(1 << gpio->pin);
+    gpio->direction = dir;
 }
 
 /**
- * // установить состояние выхода порта PGIO
+ * Установить состояние выхода порта PGIO
  * @param gpio - PGIO порт
  * @param mode - ON или OFF
  */
-static void
+void
 gpio_set_state(struct gpio *gpio, u8 mode)
 {
     if (mode)
-        gpio->port[0] |= (1 << gpio->pin);
+        gpio->port_addr[0] |= (1 << gpio->pin);
     else
-        gpio->port[0] &= ~(1 << gpio->pin);
+        gpio->port_addr[0] &= ~(1 << gpio->pin);
 
     gpio->output_state = mode;
 }
 
+/**
+ * Инициализация списка GPIO портов
+ * @param gpio_list
+ */
+void
+gpio_init_list(struct gpio *gpio_list)
+{
+    struct gpio *gpio;
+    for (gpio = gpio_list; gpio->direction_addr != NULL; gpio++) {
+        gpio_set_direction(gpio, gpio->direction);
+        gpio_set_state(gpio, gpio->output_state);
+    }
+}
