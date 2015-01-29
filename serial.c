@@ -39,7 +39,7 @@ usart_get(void)
  * @param ubrr - скорость BAUD RATE
  */
 void
-usart_Init()
+usart_init()
 {
     unsigned int ubrr = F_CPU / 16 / SERIAL_BAUD_RATE - 1;
 

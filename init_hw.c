@@ -55,14 +55,35 @@ turn_pump(u8 state)
 }
 
 /**
+ * Инициализация датчиков потока холодной и горячей воды
+ */
+void
+init_flow_contols()
+{
+    DDRD &= ~_BV(PD2);
+    PORTD |= _BV(PD2);
+    EICRA |= _BV(ISC01);
+    EICRA |= _BV(ISC11);
+    EIMSK |= _BV(INT0);
+
+    DDRD &= ~_BV(PD3); \
+    PORTD |= _BV(PD3); \
+    EICRA |= _BV(ISC01); \
+    EICRA |= _BV(ISC11); \
+    EIMSK |= _BV(INT1); \
+}
+
+
+/**
  * Инициализация аппаратной части
  */
 void
 init_hw(void)
 {
-    usart_Init();
+    usart_init();
     init_relays();
     init_timer2();
+    init_flow_contols();
     init_leds(leds, ARRAY_SIZE(leds));
     Hw_timers.sec = 1001;
     //wdt_enable(WDTO_2S); // Включаем вэтчдог

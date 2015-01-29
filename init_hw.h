@@ -14,7 +14,8 @@ void
 init_hw(void);
 void
 turn_pump(u8 state);
-
+void
+init_flow_contols();
 
 enum list_leds {
     LED_COLD_WATER,

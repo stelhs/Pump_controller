@@ -33,3 +33,24 @@ SIGNAL(SIG_OUTPUT_COMPARE2)
     update_leds();
 }
 
+
+/**
+ * Обработчик сигнала с датчика потока холодной воды
+ */
+SIGNAL(SIG_INTERRUPT0)
+{
+
+
+}
+
+
+/**
+ * Обработчик сигнала с датчика потока горячей воды
+ */
+SIGNAL(SIG_INTERRUPT1)
+{
+
+
+}
+
+
