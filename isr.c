@@ -19,25 +19,17 @@
  */
 SIGNAL(SIG_OUTPUT_COMPARE2)
 {
-	volatile struct list_timers *timers;
+    volatile struct list_timers *timers;
 
-	// Перебираем список наборов таймеров
-	for(timers = All_timer_counters; timers[0].count; timers++)
-		dec_timers((struct list_timers *)timers); // и инкрементируем каждый набор
+    // Перебираем список наборов таймеров
+    for (timers = All_timer_counters; timers[0].count; timers++)
+        dec_timers((struct list_timers *) timers); // и инкрементируем каждый набор
 
-	// Обновляем значения таймеров для работы логики опроса состояния кнопок
-	change_timer_buttons();
+    if (Hw_timers.sec == 1) {
+        update_machine_timer(1);
+        Hw_timers.sec = 1001;
+    }
 
-	lcd_refrash();
-
-	if(Hw_timers.sec == 1)
-	{
-		update_machine_timer(1);
-		Hw_timers.sec = 1001;
-	}
-
-	update_leds();
+    update_leds();
 }
-
-
 

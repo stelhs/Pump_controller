@@ -21,67 +21,36 @@
  * Функция должна встраиваться в обработчик системного таймера
  * @param list_timers - список таймеров
  */
-void dec_timers(struct list_timers *list_timers) // Данная функция встраивается в обработчик таймера и обслуживает все таймеры
+void
+dec_timers(struct list_timers *list_timers) // Данная функция встраивается в обработчик таймера и обслуживает все таймеры
 {
-	int count = list_timers->count;
+    int count = list_timers->count;
 
-	for(; count > 0; --count)
-		if(((t_counter *)list_timers->timers)[count - 1] > 1)
-			((t_counter *)list_timers->timers)[count - 1]--;
+    for (; count > 0; --count)
+        if (((t_counter *) list_timers->timers)[count - 1] > 1)
+            ((t_counter *) list_timers->timers)[count - 1]--;
 }
 
 /// Формируем список наборов таймеров
-volatile struct list_timers All_timer_counters[] =
-{
-	{
-		.timers = (t_counter *)&Hw_timers, /// Набор счетчиков для работы аппаратных средств
-		.count =  sizeof(Hw_timers) / sizeof(t_counter), /// Количество счетчиков в наборе
-	},
-	{
-		.timers = (t_counter *)&Machine_timers, /// Набор счетчиков для работы основного ПО
-		.count =  sizeof(Machine_timers) / sizeof(t_counter),
-	},
-	{
-		.timers = (t_counter *)&LCD_timers, /// Набор счетчиков для работы LCD
-		.count =  sizeof(LCD_timers) / sizeof(t_counter),
-	},
-	{ /// Конец списка наборов
-		.timers = 0,
-		.count = 0,
-	}
-};
-
+volatile struct list_timers All_timer_counters[] = { { .timers =
+        (t_counter *) &Hw_timers, /// Набор счетчиков для работы аппаратных средств
+        .count = sizeof(Hw_timers) / sizeof(t_counter), /// Количество счетчиков в наборе
+        }, { .timers = (t_counter *) &Machine_timers, /// Набор счетчиков для работы основного ПО
+                .count = sizeof(Machine_timers) / sizeof(t_counter), }, {
+                .timers = (t_counter *) &LCD_timers, /// Набор счетчиков для работы LCD
+                .count = sizeof(LCD_timers) / sizeof(t_counter), }, { /// Конец списка наборов
+        .timers = 0, .count = 0, } };
 
 /**
  * Инициализация таймера 2
  */
-inline void init_timer2(void)
+inline void
+init_timer2(void)
 {
-	OCR2 = TIMER2_DELAY;
-	TCCR2 = 0b011;
-	TIFR |= OCF2;
-	TIMSK |= _BV(OCIE2);
-}
-
-
-u32 hour_to_sec(u8 hour)
-{
-	return (u32)hour * 60 * 60;
-}
-
-u32 day_to_sec(u8 day)
-{
-	return (u32)day * 24 * 60 * 60;
-}
-
-u8 sec_to_hour(u32 sec)
-{
-	return (u8)ceil((double)sec / 60 / 60);
-}
-
-u8 sec_to_day(u32 sec)
-{
-	return (u8)ceil((double)sec / 60 / 60 / 24);
+    OCR2 = TIMER2_DELAY;
+    TCCR2 = 0b011;
+    TIFR |= OCF2;
+    TIMSK |= _BV(OCIE2);
 }
 
 
