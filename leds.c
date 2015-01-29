@@ -20,7 +20,7 @@ turn_led(struct led *led, u8 mode) // Включить или выключить
 }
 
 void
-update_leds(void)
+leds_update(void)
 {
     u8 i;
     for (i = 0; i < Lib_leds.count; i++) {
@@ -45,7 +45,7 @@ update_leds(void)
 }
 
 void
-init_leds(struct led *leds, u8 count)
+leds_init(struct led *leds, u8 count)
 {
     u8 i;
     Lib_leds.leds = leds;
@@ -62,7 +62,7 @@ init_leds(struct led *leds, u8 count)
 }
 
 void
-set_led_state(u8 num, u8 mode, t_counter interval1, t_counter interval2) // Установить состояние светодиода
+leds_set_state(u8 num, u8 mode, t_counter interval1, t_counter interval2) // Установить состояние светодиода
 {
     struct led *led = Lib_leds.leds + num;
 

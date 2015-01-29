@@ -25,4 +25,4 @@ dec_timers(struct list_timers *list_timers);
 // конфигурация таймера 2: частота 1000Hz
 #define TIMER2_DELAY (u8)((u32)F_CPU / 1000 / (2 * 32) - 1)
 void
-init_timer2(void);
+timer2_init(void);

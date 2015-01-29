@@ -34,7 +34,7 @@ static struct led leds[] = {
  * Инициализация всех выходов на реле
  */
 static void
-init_relays(void)
+relays_init(void)
 {
     DDRA |= _BV(PA4);
 
@@ -46,7 +46,7 @@ init_relays(void)
  * @param state - 1- вкл, 0 - выкл
  */
 void
-turn_pump(u8 state)
+pump_set_state(u8 state)
 {
     if (state)
         PORTA |= _BV(PA4);
@@ -57,8 +57,8 @@ turn_pump(u8 state)
 /**
  * Инициализация датчиков потока холодной и горячей воды
  */
-void
-init_flow_contols()
+static void
+flow_contols_init()
 {
     DDRD &= ~_BV(PD2);
     PORTD |= _BV(PD2);
@@ -81,10 +81,10 @@ void
 init_hw(void)
 {
     usart_init();
-    init_relays();
-    init_timer2();
-    init_flow_contols();
-    init_leds(leds, ARRAY_SIZE(leds));
+    relays_init();
+    timer2_init();
+    flow_contols_init();
+    leds_init(leds, ARRAY_SIZE(leds));
     Hw_timers.sec = 1001;
     //wdt_enable(WDTO_2S); // Включаем вэтчдог
     sei();

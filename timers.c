@@ -45,7 +45,7 @@ volatile struct list_timers All_timer_counters[] = { { .timers =
  * Инициализация таймера 2
  */
 inline void
-init_timer2(void)
+timer2_init(void)
 {
     OCR2 = TIMER2_DELAY;
     TCCR2 = 0b011;

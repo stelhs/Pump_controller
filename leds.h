@@ -14,13 +14,13 @@ struct led {
 };
 
 void
-update_leds(void);
+leds_update(void);
 void
-init_leds(struct led *leds, u8 count);
+leds_init(struct led *leds, u8 count);
 
 // Установить состояние светодиода
 // interval1 и interval2 это время горения и время негорения светодиода
 void
-set_led_state(u8 num, u8 mode, t_counter interval1, t_counter interval2);
+leds_set_state(u8 num, u8 mode, t_counter interval1, t_counter interval2);
 
 #endif
