@@ -16,8 +16,7 @@
 static int
 usart_put(char var)
 {
-    while (!(UCSRA & (1 << UDRE)))
-        ;
+    while (!(UCSRA & (1 << UDRE)));
     UDR = var;
     return 0;
 }
@@ -29,8 +28,7 @@ usart_put(char var)
 static char
 usart_get(void)
 {
-    while (!(UCSRA & (1 << RXC)))
-        ;
+    while (!(UCSRA & (1 << RXC)));
     return UDR;
 }
 
@@ -39,7 +37,7 @@ usart_get(void)
  * @param ubrr - скорость BAUD RATE
  */
 void
-usart_init()
+usart_init(void)
 {
     unsigned int ubrr = F_CPU / 16 / SERIAL_BAUD_RATE - 1;
 

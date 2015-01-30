@@ -1,11 +1,6 @@
+#include <stdio.h>
 #include "types.h"
 #include "gpio.h"
-
-static struct
-{
-    struct gpio *gpio_array; // Указатель на массив портов
-    u8 count; // Количество портов в массиве
-} Lib_gpio;
 
 /**
  * Установить режим GPIO

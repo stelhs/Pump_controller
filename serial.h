@@ -11,6 +11,6 @@
 #define SERIAL_BAUD_RATE				9600
 
 void
-usart_init();  //Инициалтизация RS232
+usart_init(void);
 
 #endif /* SERIAL_H_ */

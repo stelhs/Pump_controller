@@ -1,6 +1,7 @@
+#include <stdio.h>
 #include "types.h"
-#include "leds.h"
 #include "gpio.h"
+#include "leds.h"
 
 static struct // Структура для работы со светодиодами
 {
@@ -18,7 +19,7 @@ void
 leds_update(void)
 {
     struct led *led;
-    for (led = leds; led->gpio != NULL; led++) {
+    for (led = Lib_leds.leds; led->gpio != NULL; led++) {
         if (led->blink_timer > 1)
             led->blink_timer--;
 
@@ -26,11 +27,11 @@ leds_update(void)
             continue;
 
         if (led->state) {
-            turn_led(led, 0);
+            led_set_state(led, 0);
             led->blink_timer = led->interval2; // Заряжаем таймер значением interval1
         }
         else {
-            turn_led(led, 1);
+            led_set_state(led, 1);
             led->blink_timer = led->interval1; // Заряжаем таймер значением interval2
         }
     }
@@ -39,14 +40,13 @@ leds_update(void)
 void
 leds_init(struct led *leds)
 {
-    Lib_leds.leds = leds;
     struct led *led;
-    for (led = leds; led->gpio != NULL; led++) {
+    for (led = Lib_leds.leds; led->gpio != NULL; led++) {
         gpio_set_direction(led->gpio, GPIO_OUTPUT);
         led->blink_timer = 0;
         led->interval1 = 0;
         led->interval2 = 0;
-        turn_led(led, 0);
+        led_set_state(led, 0);
     }
 }
 

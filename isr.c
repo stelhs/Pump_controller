@@ -7,10 +7,7 @@
 #include <avr/interrupt.h>
 #include "timers.h"
 #include "machine.h"
-#include "buttons.h"
 #include "leds.h"
-#include "lcd.h"
-#include "modes.h"
 #include "config.h"
 
 /**
@@ -26,11 +23,11 @@ SIGNAL(SIG_OUTPUT_COMPARE2)
         dec_timers((struct list_timers *) timers); // и инкрементируем каждый набор
 
     if (Hw_timers.sec == 1) {
-        update_machine_timer(1);
+        //update_machine_timer(1);
         Hw_timers.sec = 1001;
     }
 
-    update_leds();
+    leds_update();
 }
 
 

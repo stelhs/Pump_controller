@@ -5,14 +5,14 @@
  *      Author: Michail Kurochkin
  */
 
+#include <stdio.h>
 #include <avr/wdt.h>
 #include <avr/interrupt.h>
 #include "timers.h"
 #include "machine.h"
-#include "buttons.h"
 #include "serial.h"
 #include "timers.h"
-#include "lcd.h"
+#include "gpio.h"
 #include "leds.h"
 #include "config.h"
 
@@ -73,20 +73,20 @@ struct gpio gpio_list[] = {
 
 static struct led leds_list[] = {
     {
-        .gpio = &gpio_list[MCU_GPIO_LED_COLD]
+        .gpio = &gpio_list[MCU_GPIO_LED_COLD],
     },
     {
-        .gpio = &gpio_list[MCU_GPIO_LED_HOT]
+        .gpio = &gpio_list[MCU_GPIO_LED_HOT],
     },
     {
-        .gpio = NULL
+        .gpio = NULL,
     }
 };
 
 
 /**
  * Включить или выключить питание насоса
- * @param state - 1- вкл, 0 - выкл
+ * @param state - 1- вкл, 0 - выклtn
  */
 void
 pump_set_state(u8 mode)
@@ -98,15 +98,12 @@ pump_set_state(u8 mode)
  * Инициализация датчиков потока холодной и горячей воды
  */
 static void
-flow_contols_init()
+flow_contols_init(void)
 {
-    EICRA |= _BV(ISC01);
-    EICRA |= _BV(ISC11);
-    EIMSK |= _BV(INT0);
-
-    EICRA |= _BV(ISC01);
-    EICRA |= _BV(ISC11);
-    EIMSK |= _BV(INT1);
+    gpio_set_direction(&gpio_list[MCU_GPIO_FLOW_SENSOR_COLD], GPIO_INPUT);
+    gpio_set_direction(&gpio_list[MCU_GPIO_FLOW_SENSOR_HOT], GPIO_INPUT);
+    MCUCR |= _BV(ISC10 | ISC00);
+    GICR |= _BV(INT0 | INT1);
 }
 
 

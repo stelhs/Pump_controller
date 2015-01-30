@@ -17,12 +17,12 @@ struct gpio {
 };
 
 void
-gpio_init_list(struct gpio *gpio_list)
+gpio_init_list(struct gpio *gpio_list);
 
 void
 gpio_set_direction(struct gpio *gpio, u8 mode);
 
 void
-gpio_set_state(struct gpio *gpio, u8 mode)
+gpio_set_state(struct gpio *gpio, u8 mode);
 
 #endif

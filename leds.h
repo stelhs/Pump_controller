@@ -1,5 +1,5 @@
-#ifndef LED_LIB_H
-#define LED_LIB_H
+#ifndef LED_H
+#define LED_H
 
 #include "gpio.h"
 #include "types.h"

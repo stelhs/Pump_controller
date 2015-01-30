@@ -26,3 +26,5 @@ dec_timers(struct list_timers *list_timers);
 #define TIMER2_DELAY (u8)((u32)F_CPU / 1000 / (2 * 32) - 1)
 void
 timer2_init(void);
+
+#endif

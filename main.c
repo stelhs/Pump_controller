@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include "init_hw.h"
 #include "machine.h"
-#include "modes.h"
 #include "config.h"
 
 int
@@ -22,6 +21,5 @@ main(void)
     for (;;) {
 
     }
-
 }
 
