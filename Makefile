@@ -1,4 +1,4 @@
-MCU = atmega8
+MCU = atmega32
 
 F_CPU = 8000000
 
@@ -6,7 +6,6 @@ FORMAT = ihex
 
 TARGET = main
 
-# Подключаем все сишки в основном каталоге
 SRC=$(wildcard *.c)
 
 ASRC =
