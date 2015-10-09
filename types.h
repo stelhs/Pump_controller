@@ -17,6 +17,10 @@ typedef long s32;
 
 typedef u16 t_counter;
 
+#define ON 1
+#define OFF 0
+
+
 // Создать строку в программной памяти
 #define SET_PGM_STR(num, str)    \
     prog_char __str_pgm_##num[] = {str} \

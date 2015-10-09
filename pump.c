@@ -5,8 +5,11 @@
  *      Author: Michail Kurochkin
  */
 
+#include "types.h"
 #include "config.h"
+#include "gpio.h"
 #include "pump.h"
+#include "init_hw.h"
 
 /**
  * Объект включает в себя все таймеры необходимые

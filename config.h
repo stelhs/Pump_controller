@@ -8,5 +8,6 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
+#define CONFIG_PUMP_TIMEOUT 5000
 
 #endif /* CONFIG_H_ */

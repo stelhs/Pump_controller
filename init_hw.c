@@ -9,23 +9,13 @@
 #include <avr/wdt.h>
 #include <avr/interrupt.h>
 #include "timers.h"
-#include "machine.h"
 #include "serial.h"
 #include "timers.h"
 #include "gpio.h"
 #include "leds.h"
 #include "config.h"
+#include "init_hw.h"
 
-/**
- * Список всех использующихся GPIO
- */
-enum mcu_gpios {
-    MCU_GPIO_LED_COLD,        //!< MCU_GPIO_LED_COLD
-    MCU_GPIO_LED_HOT,         //!< MCU_GPIO_LED_HOT
-    MCU_GPIO_PUMP,            //!< MCU_GPIO_PUMP
-    MCU_GPIO_FLOW_SENSOR_COLD,//!< MCU_GPIO_FLOW_SENSOR_COLD
-    MCU_GPIO_FLOW_SENSOR_HOT  //!< MCU_GPIO_FLOW_SENSOR_HOT
-};
 
 /**
  * Конфигурирование всех GPIO
@@ -118,7 +108,6 @@ init_hw(void)
     timer2_init();
     flow_contols_init();
     leds_init(leds_list);
-    Hw_timers.sec = 1001;
     //wdt_enable(WDTO_2S); // Включаем вэтчдог
     sei();
 }

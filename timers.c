@@ -14,7 +14,7 @@
 #include <avr/io.h>
 #include <math.h>
 #include "timers.h"
-#include "machine.h"
+#include "pump.h"
 
 /**
  * Функция должна встраиваться в обработчик системного таймера
@@ -33,12 +33,8 @@ dec_timers(struct list_timers *list_timers) // Данная функция вс�
 /// Формируем список наборов таймеров
 volatile struct list_timers All_timer_counters[] = {
     {
-        .timers = (t_counter *) &Hw_timers, /// Набор счетчиков для работы аппаратных средств
-        .count = sizeof(Hw_timers) / sizeof(t_counter), /// Количество счетчиков в наборе
-    },
-    {
-        .timers = (t_counter *) &Machine_timers, /// Набор счетчиков для работы основного ПО
-        .count = sizeof(Machine_timers) / sizeof(t_counter),
+        .timers = (t_counter *) &Pump_timers, /// Набор счетчиков для работы основного ПО
+        .count = sizeof(Pump_timers) / sizeof(t_counter),
     },
     { /// Конец списка наборов
         .timers = 0,
